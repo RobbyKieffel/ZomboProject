@@ -11,16 +11,18 @@ export(int, 100, 500) var move_speed
 
 
 func _physics_process(delta):
+	movement()
+
+
+func movement():
 	if nav_agent.is_navigation_finished():
 		return
-	
+	velocity = move_and_slide(direction_move() * move_speed)
+
+
+func direction_move() -> Vector2:
 	var direction = global_position.direction_to(nav_agent.get_next_location()).normalized()
-	
-#	var desire_vel = direction * move_speed
-#	var steering = (desire_vel - velocity) * delta * 0.4
-#	velocity += steering
-	
-	velocity = move_and_slide(direction * move_speed)
+	return direction
 
 
 func _on_UpdateTargetPos_timeout():
